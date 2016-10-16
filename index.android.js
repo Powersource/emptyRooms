@@ -17,19 +17,24 @@ export default class emptyRooms extends Component {
     return (
       <View style={styles.container}>
         <Text style={styles.welcome}>
-          Welcome to React Native!
+          Welcome to emptyRooms!
         </Text>
-        <Text style={styles.instructions}>
-          To get started, edit index.android.js
-        </Text>
-        <Text style={styles.instructions}>
-          Double tap R on your keyboard to reload,{'\n'}
-          Shake or press menu button for dev menu
-        </Text>
+        <FilterableRoomTable roomType ='exercise' />
       </View>
     );
   }
-}
+};
+
+class FilterableRoomTable extends Component {
+  render() {
+    return (
+      <Text style={styles.welcome}>
+        Available {this.props.roomType}rooms:
+      </Text>
+      );
+  }
+};
+
 
 const styles = StyleSheet.create({
   container: {
