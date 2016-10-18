@@ -11,6 +11,9 @@ const Rooms = class {
 		// This should eventually be replaced with
 		// ical.fromUrl
 		this.json = ical.parseFile('test-ics/2rooms.ics');
+		// The json object turned into a list
+		this.bookingList = Object.keys(this.json)
+			.map(booking => this.json[booking]);
 	}
 
 	getAllJson() {
@@ -19,17 +22,24 @@ const Rooms = class {
 
 	getRoomStartToday(room) {
 		let i = 0;
-		// Turn the json object into a list
-		// of events to make it filterable
-		return Object.keys(this.json)
-			.map(key => this.json[key])
-			.forEach(e => console.log(e.location));
+		return this.bookingList
+			//.forEach(b => console.log(JSON.stringify(b, null, 4) + this.bookingIsToday(b)));
 			// TODO: Update the file before checking the date...
-			//.filter(e => eventIsToday(e))
+			.filter(b => this.bookingIsToday(b))
+			.forEach(b => console.log(b));
 			/*.filter(e => eventIsInRoom(e, room)
 			 * .map(this json format -> the format at the
 			 * 	bottom of index.android.js)
 			 */
+	}
+
+	bookingIsToday(booking) {
+		const now = new Date();
+		const startOfToday = new Date(now.getFullYear(),
+				now.getMonth(), now.getDate());
+		const endOfToday = new Date(startOfToday.valueOf() + 1000 * 60 * 60 * 24);
+		const startOfBooking = Date.parse(booking.start);
+		return startOfToday < startOfBooking && startOfBooking < endOfToday;
 	}
 }
 
@@ -38,4 +48,3 @@ module.exports = Rooms;
 const data = new Rooms();
 // Remember to check that there actually are events when testing this
 console.log(data.getRoomStartToday('V:N1'));
-console.log(data.getAllJson());
