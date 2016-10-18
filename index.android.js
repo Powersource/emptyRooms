@@ -29,7 +29,7 @@ export default class emptyRooms extends Component {
 class FilterableRoomTable extends Component {
   render() {
     return (
-      <View>
+      <View style={styles.filterableRoomTable}>
         <Text style={styles.welcome}>
           Available rooms:
         </Text>
@@ -45,9 +45,6 @@ class RoomTable extends Component {
 
   
   render() {
-    var roomRows = this.props.roomTable.map(function(room) {
-      <RoomRow roomName={room.roomName} roomTime={room.roomTime} />;
-    });
 
     return (
       <View>
@@ -60,8 +57,9 @@ class RoomTable extends Component {
           </Text>    
         </View>
         <View style={styles.roomTable}>
-          {/*<RoomRow roomName='E:3316' roomTime='13:00-15:00' /> */}
-          {roomRows}
+          {this.props.roomTable.map(function(room,i) {
+            return <RoomRow key={i}roomName={room.roomName} roomTime={room.roomTime} />;
+          })}
         </View>
       </View>
 
@@ -72,8 +70,11 @@ class RoomRow extends Component {
   render() {
     return (
       <View style={styles.roomRow}>
-        <Text>{this.props.roomName}</Text>
-        <Text>{this.props.roomTime}</Text>
+        <Text style={styles.alignLeft}>
+          {this.props.roomName}</Text>
+        <Text style={styles.alignRight}>
+          {this.props.roomTime}
+        </Text>
       </View>
     );
   }
@@ -86,34 +87,57 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'flex-start',
     alignItems: 'center',
-    backgroundColor: '#F5FCFF',
+    backgroundColor: 'powderblue',
   },
   welcome: {
     fontSize: 20,
     textAlign: 'center',
-    margin: 10,
+    margin: 10
+
   },
   instructions: {
     textAlign: 'center',
     color: '#333333',
     marginBottom: 5,
   },
+  filterableRoomTable: {
+    width:200,
+    backgroundColor:'skyblue'
+  },
   descriptionBar: {
     flexDirection:'row',
     justifyContent: 'space-around',
   },
   roomTable: {
-
+    flex:1,
+    
+    justifyContent:'space-around'
   },
   roomRow: {
     flexDirection: 'row',
-    justifyContent: 'space-around',
+    justifyContent: 'space-around'
+  },
+  alignLeft: {
+    
+  },
+  alignRight: {
+    justifyContent: 'flex-end'
   }
 });
+
 
 var ROOMS = [
 {roomName:'E:3316', roomTime:'08:00-17:00'},
 {roomName:'E:3317', roomTime:'09:00-17:00'},
+{roomName:'E:1149', roomTime:'10:00-17:00'},
+{roomName:'M:1149', roomTime:'10:00-17:00'},
+{roomName:'M:1', roomTime:'10:00-17:00'},
+{roomName:'E:A', roomTime:'10:00-17:00'},
+{roomName:'E:Varg', roomTime:'10:00-17:00'},
+{roomName:'V:O1', roomTime:'10:00-17:00'},
+{roomName:'E:Jupiter', roomTime:'10:00-17:00'},
+{roomName:'K:emicentrum', roomTime:'10:00-17:00'},
+{roomName:'E:3318', roomTime:'10:00-17:00'},
 {roomName:'E:3318', roomTime:'10:00-17:00'}];
 
 AppRegistry.registerComponent('emptyRooms', () => emptyRooms);
