@@ -27,9 +27,11 @@ const Rooms = class {
 			// TODO: Update the file before checking the date...
 			.filter(b => this.bookingIsToday(b))
 			.filter(b => this.bookingIsInRoom(b, room))
-			.forEach(b => console.log(b));
-			/* .onlyKeepLastEventOrSomething()
-			 * .map(this json format -> the format at the
+			.reduce((prev, cur) => this.returnLaterEndingBooking(prev, cur), {
+				end: Date.parse('2010-10-10T00:00:00.000Z tz: undefined'),
+				location: 'NOPE'});
+			//.forEach(b => console.log(b));
+			 /* .intemapmennåtsånt(this json format -> the format at the
 			 * 	bottom of index.android.js)
 			 */
 	}
@@ -47,6 +49,14 @@ const Rooms = class {
 		return booking.location
 			.split(', ')
 			.includes(room);
+	}
+
+	returnLaterEndingBooking(prev, cur) {
+		if(Date.parse(prev.end).valueOf() > Date.parse(cur.end).valueOf()) {
+			return prev;
+		} else {
+			return cur;
+		}
 	}
 }
 
