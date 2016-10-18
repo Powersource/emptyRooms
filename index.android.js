@@ -12,6 +12,7 @@ import {
   View
 } from 'react-native';
 
+
 export default class emptyRooms extends Component {
   render() {
     return (
@@ -19,7 +20,7 @@ export default class emptyRooms extends Component {
         <Text style={styles.welcome}>
           Welcome to emptyRooms!
         </Text>
-        <FilterableRoomTable />
+        <FilterableRoomTable roomTable = {ROOMS}/>
       </View>
     );
   }
@@ -28,17 +29,23 @@ export default class emptyRooms extends Component {
 class FilterableRoomTable extends Component {
   render() {
     return (
-      <View>
+      <View style={styles.filterableRoomTable}>
         <Text style={styles.welcome}>
           Available rooms:
         </Text>
-        <RoomTable />
+        <RoomTable roomTable={this.props.roomTable} />
       </View>  
       );
   }
 };
 class RoomTable extends Component {
+  /* var roomRows = this.props.roomTable.map(function(room) {
+    return (<RoomRow roomName = {room.roomName} roomTime = {room.roomTime} />);
+  }); */
+
+  
   render() {
+
     return (
       <View>
         <View style={styles.descriptionBar}>
@@ -49,8 +56,10 @@ class RoomTable extends Component {
             Available   
           </Text>    
         </View>
-        <View style={styles.roomList}>
-          <RoomRow roomName='E:3316' roomTime='13:00-15:00' />
+        <View style={styles.roomTable}>
+          {this.props.roomTable.map(function(room,i) {
+            return <RoomRow key={i}roomName={room.roomName} roomTime={room.roomTime} />;
+          })}
         </View>
       </View>
 
@@ -61,8 +70,11 @@ class RoomRow extends Component {
   render() {
     return (
       <View style={styles.roomRow}>
-        <Text>{this.props.roomName}</Text>
-        <Text>{this.props.roomTime}</Text>
+        <Text style={styles.alignLeft}>
+          {this.props.roomName}</Text>
+        <Text style={styles.alignRight}>
+          {this.props.roomTime}
+        </Text>
       </View>
     );
   }
@@ -75,34 +87,57 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'flex-start',
     alignItems: 'center',
-    backgroundColor: '#F5FCFF',
+    backgroundColor: 'powderblue',
   },
   welcome: {
     fontSize: 20,
     textAlign: 'center',
-    margin: 10,
+    margin: 10
+
   },
   instructions: {
     textAlign: 'center',
     color: '#333333',
     marginBottom: 5,
   },
+  filterableRoomTable: {
+    width:200,
+    backgroundColor:'skyblue'
+  },
   descriptionBar: {
     flexDirection:'row',
     justifyContent: 'space-around',
   },
-  roomList: {
-
+  roomTable: {
+    flex:1,
+    
+    justifyContent:'space-around'
   },
   roomRow: {
     flexDirection: 'row',
-    justifyContent: 'space-around',
+    justifyContent: 'space-around'
+  },
+  alignLeft: {
+    
+  },
+  alignRight: {
+    justifyContent: 'flex-end'
   }
 });
 
+
 var ROOMS = [
 {roomName:'E:3316', roomTime:'08:00-17:00'},
-{roomName='E:3317', roomTime='09:00-17:00'},
-{roomName='E:3318', roomTime='10:00-17:00'}];
+{roomName:'E:3317', roomTime:'09:00-17:00'},
+{roomName:'E:1149', roomTime:'10:00-17:00'},
+{roomName:'M:1149', roomTime:'10:00-17:00'},
+{roomName:'M:1', roomTime:'10:00-17:00'},
+{roomName:'E:A', roomTime:'10:00-17:00'},
+{roomName:'E:Varg', roomTime:'10:00-17:00'},
+{roomName:'V:O1', roomTime:'10:00-17:00'},
+{roomName:'E:Jupiter', roomTime:'10:00-17:00'},
+{roomName:'K:emicentrum', roomTime:'10:00-17:00'},
+{roomName:'E:3318', roomTime:'10:00-17:00'},
+{roomName:'E:3318', roomTime:'10:00-17:00'}];
 
 AppRegistry.registerComponent('emptyRooms', () => emptyRooms);
