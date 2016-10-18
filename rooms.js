@@ -20,20 +20,24 @@ const Rooms = class {
 		return this.json;
 	}
 
+	getAllRoomInfo() {
+		//manual so far
+		return [
+			this.getRoomStartToday('V:N1'),
+			this.getRoomStartToday('V:N2'),
+			this.getRoomStartToday('E:3316')
+		];
+	}
+
 	getRoomStartToday(room) {
 		let i = 0;
-		return this.bookingList
-			//.forEach(b => console.log(JSON.stringify(b, null, 4) + this.bookingIsToday(b)));
+		return this.formatBookingForDisplay(room, this.bookingList
 			// TODO: Update the file before checking the date...
 			.filter(b => this.bookingIsToday(b))
 			.filter(b => this.bookingIsInRoom(b, room))
 			.reduce((prev, cur) => this.returnLaterEndingBooking(prev, cur), {
 				end: Date.parse('2010-10-10T00:00:00.000Z tz: undefined'),
-				location: 'NOPE'});
-			//.forEach(b => console.log(b));
-			 /* .intemapmennåtsånt(this json format -> the format at the
-			 * 	bottom of index.android.js)
-			 */
+				location: 'NOPE'}));
 	}
 
 	bookingIsToday(booking) {
@@ -58,10 +62,17 @@ const Rooms = class {
 			return cur;
 		}
 	}
+
+	formatBookingForDisplay(room, booking) {
+		const time = new Date(booking.end);
+		return {roomName: room,
+			roomTime: time.getHours() + ':' + time.getMinutes() + '-17:00'}
+	}
 }
 
 module.exports = Rooms;
 
 const data = new Rooms();
 // Remember to check that there actually are events when testing this
-console.log(data.getRoomStartToday('V:N1'));
+console.log(data.getAllRoomInfo());
+console.log(data.getAllJson());
