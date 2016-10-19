@@ -2,20 +2,84 @@ import React, { Component } from 'react';
 import logo from './logo.svg';
 import './App.css';
 
+
 class App extends Component {
   render() {
     return (
-      <div className="App">
-        <div className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <h2>Welcome to React</h2>
-        </div>
-        <p className="App-intro">
-          To get started, edit <code>src/App.js</code> and save to reload.
-        </p>
+      <div>
+        <h1 class="App-header">
+          Welcome to emptyRooms!
+        </h1>
+        <FilterableRoomTable roomTable = {ROOMS}/>
       </div>
+      
+    );
+  }
+
+}
+class FilterableRoomTable extends Component {
+  render() {
+    return (
+      <div class="FilterableRoomTable">
+        
+        Available rooms:
+        
+        <RoomTable roomTable={this.props.roomTable} />
+      </div>  
+      );
+  }
+};
+class RoomTable extends Component {
+  /* var roomRows = this.props.roomTable.map(function(room) {
+    return (<RoomRow roomName = {room.roomName} roomTime = {room.roomTime} />);
+  }); */
+
+  
+  render() {
+    return (
+      <table>
+        <tr className="DescriptionBar">
+          <th>Room</th>
+          <th>Time Available</th>    
+        </tr>
+        <tr className="RoomTable">
+          {this.props.roomTable.map(function(room,i) {
+            return <RoomRow key={i}roomName={room.roomName} roomTime={room.roomTime} />;
+          })}
+        </tr>
+      </table>
+
+      );
+  }
+};
+
+class RoomRow extends Component {
+  render() {
+
+    return (
+      <tr className="RoomRow">
+        <td class="RoomColumn">
+          {this.props.roomName}
+        </td>
+        <td classname="TimeColumn">
+          {this.props.roomTime}
+        </td>
+      </tr>
     );
   }
 }
+var ROOMS = [
+{roomName:'E:3316', roomTime:'08:00-17:00'},
+{roomName:'E:3317', roomTime:'09:00-17:00'},
+{roomName:'E:1149', roomTime:'10:00-17:00'},
+{roomName:'M:1149', roomTime:'10:00-17:00'},
+{roomName:'M:1', roomTime:'10:00-17:00'},
+{roomName:'E:A', roomTime:'10:00-17:00'},
+{roomName:'E:Varg', roomTime:'10:00-17:00'},
+{roomName:'V:O1', roomTime:'10:00-17:00'},
+{roomName:'E:Jupiter', roomTime:'10:00-17:00'},
+{roomName:'K:emicentrum', roomTime:'10:00-17:00'},
+{roomName:'E:3318', roomTime:'10:00-17:00'},
+{roomName:'E:3318', roomTime:'10:00-17:00'}];
 
 export default App;
