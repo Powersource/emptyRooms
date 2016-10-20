@@ -3,21 +3,26 @@ import React, { Component } from 'react';
 import './App.css';
 import Rooms from './rooms.js';
 
-let ROOMS = [];
-new Rooms().then( (data) => {
-	ROOMS = data.getAllRoomInfo();
-	//ROOMS = data.getDemoInfo();
-	console.log(ROOMS);
-});
+let ROOMS = [{roomName:'E:3318', roomTime:'16:00-17:00'}];
+
 
 class App extends Component {
+	constructor () {
+		super()
+		this.state = {ROOMS: ROOMS}
+		new Rooms().then( (data) => {
+			this.setState({ROOMS: data.getAllRoomInfo()});
+			//ROOMS = data.getDemoInfo();
+			console.log(this.state.ROOMS);
+		});
+	  }
   render() {
     return (
       <div>
-        <h1 class="App-header">
+        <h1 className="App-header">
           Welcome to emptyRooms!
         </h1>
-        <FilterableRoomTable roomTable={ROOMS}/>
+        <FilterableRoomTable roomTable={this.state.ROOMS}/>
       </div>
       
     );
@@ -25,9 +30,10 @@ class App extends Component {
 
 }
 class FilterableRoomTable extends Component {
+
   render() {
     return (
-      <div class="FilterableRoomTable">
+      <div className="FilterableRoomTable">
         
         Available rooms:
         
@@ -45,15 +51,15 @@ class RoomTable extends Component {
   render() {
     return (
       <table>
+        <tbody>
         <tr className="DescriptionBar">
           <th>Room</th>
           <th>Time Available</th>    
         </tr>
-        <tr className="RoomTable">
           {this.props.roomTable.map(function(room,i) {
             return <RoomRow key={i}roomName={room.roomName} roomTime={room.roomTime} />;
           })}
-        </tr>
+	</tbody>
       </table>
 
       );
@@ -65,10 +71,10 @@ class RoomRow extends Component {
 
     return (
       <tr className="RoomRow">
-        <td class="RoomColumn">
+        <td className="RoomColumn">
           {this.props.roomName}
         </td>
-        <td classname="TimeColumn">
+        <td className="TimeColumn">
           {this.props.roomTime}
         </td>
       </tr>
@@ -76,5 +82,7 @@ class RoomRow extends Component {
   }
 }
 
+
+ROOMS = [{roomName:'E:1234', roomTime:'16:00-17:00'}];
 
 export default App;
