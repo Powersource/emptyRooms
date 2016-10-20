@@ -18,7 +18,7 @@ const Rooms = class {
 				this.json = data;
 				});*/
 		return new Promise( (res, rej) => {
-			$.get('/test-ics/2rooms.ics', result => {
+			$.get('test-ics/2rooms.ics', result => {
 				this.json = ical.parseICS(result);
 				// The json object turned into a list
 				this.bookingList = Object.keys(this.json)

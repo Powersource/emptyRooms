@@ -3,17 +3,12 @@ import React, { Component } from 'react';
 import './App.css';
 import Rooms from './rooms.js';
 
-let ROOMS = [{roomName:'E:3318', roomTime:'16:00-17:00'}];
-
-
 class App extends Component {
 	constructor () {
 		super()
-		this.state = {ROOMS: ROOMS}
+		this.state = {ROOMS: [{roomName:'E:3318', roomTime:'16:00-17:00'}]}
 		new Rooms().then( (data) => {
 			this.setState({ROOMS: data.getAllRoomInfo()});
-			//ROOMS = data.getDemoInfo();
-			console.log(this.state.ROOMS);
 		});
 	  }
   render() {
@@ -81,8 +76,5 @@ class RoomRow extends Component {
     );
   }
 }
-
-
-ROOMS = [{roomName:'E:1234', roomTime:'16:00-17:00'}];
 
 export default App;
