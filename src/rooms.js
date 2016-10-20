@@ -1,6 +1,7 @@
 //'use strict';
 
 const ical = require('ical');
+const $ = require("jquery");
 
 // Example usage:
 // const rooms = require('./rooms.js');
@@ -12,16 +13,39 @@ const Rooms = class {
 		// ical.fromUrl
 		// https://se.timeedit.net/web/lu/db1/lth1/ri6Q566Z25503QQQ96Z7575Z00yQ71n7123721Y6355Y5X.ics
 		//this.json = ical.parseFile('test-ics/2rooms.ics');
-		ical.fromURL('https://se.timeedit.net/web/lu/db1/lth1/ri6Q566Z25503QQQ96Z7575Z00yQ71n7123721Y6355Y5X.ics', {}, (err, data) => {
+		//ical.fromURL('https://se.timeedit.net/web/lu/db1/lth1/ri6Q566Z25503QQQ96Z7575Z00yQ71n7123721Y6355Y5X.ics', {}, (err, data) => {
+		/*ical.fromURL('test-ics/2rooms.ics', {}, (err, data) => {
 				this.json = data;
-				});
-		// The json object turned into a list
-		this.bookingList = Object.keys(this.json)
-			.map(booking => this.json[booking]);
+				});*/
+		return new Promise( (res, rej) => {
+			$.get('/test-ics/2rooms.ics', result => {
+				this.json = ical.parseICS(result);
+				// The json object turned into a list
+				this.bookingList = Object.keys(this.json)
+					.map(booking => this.json[booking]);
+				res(this);
+			});
+		});
 	}
 
 	getAllJson() {
 		return this.json;
+	}
+
+	getDemoInfo() {
+		return [
+		{roomName:'E:3316', roomTime:'08:00-17:00'},
+		{roomName:'E:3317', roomTime:'09:00-17:00'},
+		{roomName:'E:1149', roomTime:'10:00-17:00'},
+		{roomName:'M:1149', roomTime:'10:00-17:00'},
+		{roomName:'M:1', roomTime:'10:00-17:00'},
+		{roomName:'E:A', roomTime:'10:00-17:00'},
+		{roomName:'E:Varg', roomTime:'10:00-17:00'},
+		{roomName:'V:O1', roomTime:'10:00-17:00'},
+		{roomName:'E:Jupiter', roomTime:'10:00-17:00'},
+		{roomName:'K:emicentrum', roomTime:'10:00-17:00'},
+		{roomName:'E:3318', roomTime:'10:00-17:00'},
+		{roomName:'E:3318', roomTime:'11:00-17:00'}];
 	}
 
 	getAllRoomInfo() {

@@ -3,9 +3,12 @@ import React, { Component } from 'react';
 import './App.css';
 import Rooms from './rooms.js';
 
-const data = new Rooms();
-let ROOMS = data.getAllRoomInfo();
-console.log(ROOMS);
+let ROOMS = [];
+new Rooms().then( (data) => {
+	ROOMS = data.getAllRoomInfo();
+	//ROOMS = data.getDemoInfo();
+	console.log(ROOMS);
+});
 
 class App extends Component {
   render() {
@@ -72,19 +75,6 @@ class RoomRow extends Component {
     );
   }
 }
-/*var ROOMS = [
-{roomName:'E:3316', roomTime:'08:00-17:00'},
-{roomName:'E:3317', roomTime:'09:00-17:00'},
-{roomName:'E:1149', roomTime:'10:00-17:00'},
-{roomName:'M:1149', roomTime:'10:00-17:00'},
-{roomName:'M:1', roomTime:'10:00-17:00'},
-{roomName:'E:A', roomTime:'10:00-17:00'},
-{roomName:'E:Varg', roomTime:'10:00-17:00'},
-{roomName:'V:O1', roomTime:'10:00-17:00'},
-{roomName:'E:Jupiter', roomTime:'10:00-17:00'},
-{roomName:'K:emicentrum', roomTime:'10:00-17:00'},
-{roomName:'E:3318', roomTime:'10:00-17:00'},
-{roomName:'E:3318', roomTime:'11:00-17:00'}];*/
 
 
 export default App;
