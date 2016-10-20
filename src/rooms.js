@@ -49,12 +49,28 @@ const Rooms = class {
 	}
 
 	getAllRoomInfo() {
-		//manual so far
-		return [
-			this.getRoomStartToday('V:N1'),
-			this.getRoomStartToday('V:N2'),
-			this.getRoomStartToday('E:3316')
-		];
+		const listOfRooms = this.getListOfRooms();
+		console.log(listOfRooms);
+
+		let responseList = [];
+		listOfRooms.forEach( room => {
+			responseList.push(this.getRoomStartToday(room));
+		});
+		return responseList;
+	}
+
+	getListOfRooms() {
+		let list = [];
+		this.bookingList.forEach( booking => {
+			booking.location
+				.split(', ')
+				.forEach( room => {
+					if(list.indexOf(room) === -1) {
+						list.push(room);
+					}
+				});
+		});
+		return list;
 	}
 
 	getRoomStartToday(room) {
