@@ -1,4 +1,4 @@
-'use strict';
+//'use strict';
 
 const ical = require('ical');
 
@@ -10,7 +10,11 @@ const Rooms = class {
 	constructor() {
 		// This should eventually be replaced with
 		// ical.fromUrl
-		this.json = ical.parseFile('test-ics/2rooms.ics');
+		// https://se.timeedit.net/web/lu/db1/lth1/ri6Q566Z25503QQQ96Z7575Z00yQ71n7123721Y6355Y5X.ics
+		//this.json = ical.parseFile('test-ics/2rooms.ics');
+		ical.fromURL('https://se.timeedit.net/web/lu/db1/lth1/ri6Q566Z25503QQQ96Z7575Z00yQ71n7123721Y6355Y5X.ics', {}, (err, data) => {
+				this.json = data;
+				});
 		// The json object turned into a list
 		this.bookingList = Object.keys(this.json)
 			.map(booking => this.json[booking]);
@@ -30,7 +34,6 @@ const Rooms = class {
 	}
 
 	getRoomStartToday(room) {
-		let i = 0;
 		return this.formatBookingForDisplay(room, this.bookingList
 			// TODO: Update the file before checking the date...
 			.filter(b => this.bookingIsToday(b))
@@ -72,7 +75,7 @@ const Rooms = class {
 
 module.exports = Rooms;
 
-const data = new Rooms();
+//const data = new Rooms();
 // Remember to check that there actually are events when testing this
-console.log(data.getAllRoomInfo());
-console.log(data.getAllJson());
+//console.log(data.getAllRoomInfo());
+//console.log(data.getAllJson());

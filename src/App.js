@@ -1,7 +1,11 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
+//import logo from './logo.svg';
 import './App.css';
+import Rooms from './rooms.js';
 
+const data = new Rooms();
+let ROOMS = data.getAllRoomInfo();
+console.log(ROOMS);
 
 class App extends Component {
   render() {
@@ -10,7 +14,7 @@ class App extends Component {
         <h1 class="App-header">
           Welcome to emptyRooms!
         </h1>
-        <FilterableRoomTable roomTable = {ROOMS}/>
+        <FilterableRoomTable roomTable={ROOMS}/>
       </div>
       
     );
@@ -68,7 +72,7 @@ class RoomRow extends Component {
     );
   }
 }
-var ROOMS = [
+/*var ROOMS = [
 {roomName:'E:3316', roomTime:'08:00-17:00'},
 {roomName:'E:3317', roomTime:'09:00-17:00'},
 {roomName:'E:1149', roomTime:'10:00-17:00'},
@@ -80,6 +84,7 @@ var ROOMS = [
 {roomName:'E:Jupiter', roomTime:'10:00-17:00'},
 {roomName:'K:emicentrum', roomTime:'10:00-17:00'},
 {roomName:'E:3318', roomTime:'10:00-17:00'},
-{roomName:'E:3318', roomTime:'10:00-17:00'}];
+{roomName:'E:3318', roomTime:'11:00-17:00'}];*/
+
 
 export default App;
