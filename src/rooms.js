@@ -109,7 +109,23 @@ const Rooms = class {
 	formatBookingForDisplay(room, booking) {
 		const time = new Date(booking.end);
 		return {roomName: room,
-			roomTime: time.getHours() + ':' + time.getMinutes() + '-17:00'}
+			roomTime: (() => {
+				if(isNaN(time.getHours())){
+					return 'All day';
+				} else {
+					return this.leftPadTime(time.getHours()) + ':' + this.leftPadTime(time.getMinutes());
+				}
+				})()
+		}
+	}
+
+	leftPadTime(time) {
+		time = time.toString();
+		if(time.length === 1) {
+			return '0' + time;
+		} else {
+			return time;
+		}
 	}
 }
 
