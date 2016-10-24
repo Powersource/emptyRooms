@@ -9,8 +9,9 @@ class App extends Component {
 		this.state = {ROOMS: [{roomName:'E:3318', roomTime:'16:00-17:00'}],
 		day: "0"}
 		new Rooms().then( (data) => {
-			this.setState({ROOMS: data.getAllRoomInfo()});
+			this.setState({ROOMS: data.getAllRoomInfo(this.state.day)});
 		});
+		// OOP my ass
 		this.selectDay = this.selectDay.bind(this);
 	  }
   render() {
@@ -37,8 +38,16 @@ class App extends Component {
       </div>
     );
   }
-  selectDay(event) {
-	  this.setState({day: event.target.value});
+selectDay(event) {
+		// RIP 4 char long tabs?
+		this.setState({day: event.target.value});
+		// Could do this in the same setState but this feels cleaner
+		// Or no, I should prob. make this into a function, it's completely
+		// copy pasted. But functions are annoying to make now
+		// (it works a lot better in rooms.js somehow (I think))
+		new Rooms().then( (data) => {
+			this.setState({ROOMS: data.getAllRoomInfo(this.state.day)});
+		});
   }
 }
 class FilterableRoomTable extends Component {

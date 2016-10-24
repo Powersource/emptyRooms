@@ -9,15 +9,10 @@ const $ = require("jquery");
 const Rooms = class {
 
 	constructor() {
-		// This should eventually be replaced with
-		// ical.fromUrl
-		// https://se.timeedit.net/web/lu/db1/lth1/ri6Q566Z25503QQQ96Z7575Z00yQ71n7123721Y6355Y5X.ics
-		//this.json = ical.parseFile('test-ics/2rooms.ics');
-		//ical.fromURL('https://se.timeedit.net/web/lu/db1/lth1/ri6Q566Z25503QQQ96Z7575Z00yQ71n7123721Y6355Y5X.ics', {}, (err, data) => {
-		/*ical.fromURL('test-ics/2rooms.ics', {}, (err, data) => {
-				this.json = data;
-				});*/
 		return new Promise( (res, rej) => {
+			// To get this to work in plain node we need
+			// a certain hack to fake a document or jquery
+			// gets pissed.
 			$.get('test-ics/20rooms.ics', result => {
 				this.json = ical.parseICS(result);
 				// The json object turned into a list
@@ -48,13 +43,12 @@ const Rooms = class {
 		{roomName:'E:3318', roomTime:'11:00-17:00'}];
 	}
 
-	getAllRoomInfo() {
+	getAllRoomInfo(dayShift) {
 		const listOfRooms = this.getListOfRooms();
-		console.log(listOfRooms);
 
 		let responseList = [];
 		listOfRooms.forEach( room => {
-			responseList.push(this.getRoomStartToday(room));
+			responseList.push(this.getRoomStart(room, dayShift));
 		});
 		return responseList;
 	}
@@ -73,23 +67,28 @@ const Rooms = class {
 		return list;
 	}
 
-	getRoomStartToday(room) {
+	getRoomStart(room, dayShift) {
 		return this.formatBookingForDisplay(room, this.bookingList
-			// TODO: Update the file before checking the date...
-			.filter(b => this.bookingIsToday(b))
+			.filter(b => this.bookingIsOnDay(b, dayShift))
 			.filter(b => this.bookingIsInRoom(b, room))
 			.reduce((prev, cur) => this.returnLaterEndingBooking(prev, cur), {
+				// If you remove everything after the Z it actually
+				// returns a number. But don't do that, we currently
+				// depend on it being NaN :)
 				end: Date.parse('2010-10-10T00:00:00.000Z tz: undefined'),
 				location: 'NOPE'}));
 	}
 
-	bookingIsToday(booking) {
+	bookingIsOnDay(booking, dayShift) {
 		const now = new Date();
-		const startOfToday = new Date(now.getFullYear(),
-				now.getMonth(), now.getDate());
-		const endOfToday = new Date(startOfToday.valueOf() + 1000 * 60 * 60 * 24);
+		const dayMillis = 1000 * 60 * 60 * 24;
+		const startOfDay = new Date(
+				new Date(now.getFullYear(),
+				now.getMonth(), now.getDate())
+				.valueOf() + dayShift * dayMillis);
+		const endOfDay = new Date(startOfDay.valueOf() + dayMillis);
 		const startOfBooking = Date.parse(booking.start);
-		return startOfToday < startOfBooking && startOfBooking < endOfToday;
+		return startOfDay < startOfBooking && startOfBooking < endOfDay;
 	}
 
 	bookingIsInRoom(booking, room) {
@@ -113,12 +112,14 @@ const Rooms = class {
 				if(isNaN(time.getHours())){
 					return 'All day';
 				} else {
-					return this.leftPadTime(time.getHours()) + ':' + this.leftPadTime(time.getMinutes());
+					return this.leftPadTime(time.getHours()) + ':' +
+							this.leftPadTime(time.getMinutes());
 				}
 				})()
 		}
 	}
 
+	// Think about using a package for this
 	leftPadTime(time) {
 		time = time.toString();
 		if(time.length === 1) {
@@ -130,8 +131,3 @@ const Rooms = class {
 }
 
 module.exports = Rooms;
-
-//const data = new Rooms();
-// Remember to check that there actually are events when testing this
-//console.log(data.getAllRoomInfo());
-//console.log(data.getAllJson());
