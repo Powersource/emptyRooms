@@ -1,5 +1,5 @@
-.App {
-  
+Body {
+  background-color: #FF6405;
   }
 
 .App-logo {
@@ -8,16 +8,16 @@
 }
 
 .App-header {
-  background-color: #333;
+  background-color: #FA8C01;
   height: 150px;
   padding: 20px;
-  color: black;
+  color: #332312;
 }
 
 .Container {
   margin:auto;
-  width: 70%;
-  border: 5px solid skyblue;
+  width: 50%;
+  background-color: #FA8C01;
   text-align: center;
 }
 
@@ -34,11 +34,19 @@
   display: inline-block;
 }
 .DescriptionBar {
+  
+}
+.LeftColumn {
+  text-align: left;
  
+}
+.RightColumn {
+  text-align: left;
 }
 .RoomTable {
   white-space:nowrap;
-  justifyContent:'space-around'  
+  justifyContent:'space-around';
+  column-gap: 40px; 
 }
 .RoomRow {
   flexDirection: 'row';

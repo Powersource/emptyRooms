@@ -30,7 +30,6 @@ class FilterableRoomTable extends Component {
     return (
       <div className="FilterableRoomTable">
         
-        Available rooms:
         
         <RoomTable roomTable={this.props.roomTable} />
       </div>  
@@ -44,7 +43,9 @@ class RoomTable extends Component {
         <tbody>
           <tr className="DescriptionBar">
             <th>Room</th>
-            <th>Available</th>    
+            <th className="LeftAlign">
+              Available
+            </th>    
           </tr>
           {this.props.roomTable.map(function(room,i) {
             return <RoomRow key={i}roomName={room.roomName} roomTime={room.roomTime} />;
@@ -61,10 +62,10 @@ class RoomRow extends Component {
 
     return (
       <tr className="RoomRow">
-        <td className="RoomColumn">
+        <td className="LeftColumn">
           {this.props.roomName}
         </td>
-        <td className="TimeColumn">
+        <td className="RightColumn">
           {this.props.roomTime}
         </td>
       </tr>
