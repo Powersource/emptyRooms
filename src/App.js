@@ -13,7 +13,7 @@ class App extends Component {
 	  }
   render() {
     return (
-      <div>
+      <div className="Container">
         <h1 className="App-header">
           Welcome to emptyRooms!
         </h1>
@@ -37,24 +37,19 @@ class FilterableRoomTable extends Component {
       );
   }
 };
-class RoomTable extends Component {
-  /* var roomRows = this.props.roomTable.map(function(room) {
-    return (<RoomRow roomName = {room.roomName} roomTime = {room.roomTime} />);
-  }); */
-
-  
+class RoomTable extends Component { 
   render() {
     return (
       <table>
         <tbody>
-        <tr className="DescriptionBar">
-          <th>Room</th>
-          <th>Time Available</th>    
-        </tr>
+          <tr className="DescriptionBar">
+            <th>Room</th>
+            <th>Available</th>    
+          </tr>
           {this.props.roomTable.map(function(room,i) {
             return <RoomRow key={i}roomName={room.roomName} roomTime={room.roomTime} />;
           })}
-	</tbody>
+	     </tbody>
       </table>
 
       );
