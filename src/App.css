@@ -16,7 +16,7 @@ Body {
 
 .Container {
   margin:auto;
-  width: 50%;
+  width: 80%;
   background-color: #FA8C01;
   text-align: center;
 }
@@ -38,10 +38,12 @@ Body {
 }
 .LeftColumn {
   text-align: left;
+  font-size: 150%;
  
 }
 .RightColumn {
   text-align: left;
+  font-size: 150%;
 }
 .RoomTable {
   white-space:nowrap;
