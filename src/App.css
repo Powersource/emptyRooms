@@ -1,6 +1,6 @@
 .App {
-  text-align: center;
-}
+  
+  }
 
 .App-logo {
   animation: App-logo-spin infinite 20s linear;
@@ -8,10 +8,17 @@
 }
 
 .App-header {
-  background-color: #222;
+  background-color: #333;
   height: 150px;
   padding: 20px;
   color: black;
+}
+
+.Container {
+  margin:auto;
+  width: 70%;
+  border: 5px solid skyblue;
+  text-align: center;
 }
 
 .App-intro {
@@ -23,7 +30,8 @@
   to { transform: rotate(360deg); }
 }
 .FilterableRoomTable {
-  backgroundColor:'skyblue'
+  margin:auto;
+  display: inline-block;
 }
 .DescriptionBar {
  
